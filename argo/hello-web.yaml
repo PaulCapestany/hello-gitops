@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-web
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/paulcapestany/hello-gitops.git'
+    targetRevision: HEAD
+    path: apps/hello-web
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: hello-web-namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
