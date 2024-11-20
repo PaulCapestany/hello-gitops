@@ -6,10 +6,10 @@ metadata:
 rules:
   - apiGroups: ["route.openshift.io"]
     resources: ["routes"]
-    verbs: ["create", "update", "get", "list", "watch", "delete"]
+    verbs: ["create", "update", "get", "list", "watch", "delete", "patch"]
   - apiGroups: [""]
     resources: ["services"]
-    verbs: ["create", "update", "get", "list", "watch", "delete"]
+    verbs: ["create", "update", "get", "list", "watch", "delete", "patch"]
   - apiGroups: ["apps"]
     resources: ["deployments"]
-    verbs: ["create", "update", "get", "list", "watch", "delete"]
+    verbs: ["create", "update", "get", "list", "watch", "delete", "patch"]
