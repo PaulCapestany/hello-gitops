@@ -6,7 +6,8 @@ metadata:
 spec:
   pipelineRef:
     name: hello-web-pipeline
-  serviceAccountName: build-pipeline-sa
+  # Use the default pipeline ServiceAccount provided by OpenShift Pipelines
+  serviceAccountName: pipeline
   params:
     - name: git-url
       value: https://github.com/paulcapestany/hello-web.git
@@ -14,4 +15,5 @@ spec:
       value: quay.io/paulcapestany/hello-web:latest
   workspaces:
     - name: shared-workspace
-      emptyDir: {}
+      persistentVolumeClaim:
+        claimName: hello-web-pvc
