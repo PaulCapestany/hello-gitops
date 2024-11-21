@@ -14,5 +14,4 @@ spec:
       value: quay.io/paulcapestany/hello-web:latest
   workspaces:
     - name: shared-workspace
-      persistentVolumeClaim:
-        claimName: hello-web-pvc
+      emptyDir: {}
