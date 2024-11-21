@@ -39,17 +39,17 @@ spec:
       workspaces:
         - name: source
           workspace: shared-workspace
-
+    
     - name: deploy
       taskRef:
-        name: kubectl-apply
+        name: kubernetes-actions
         kind: ClusterTask
       params:
-        - name: manifests
+        - name: script
           value: |
-            $(workspaces.shared-workspace.path)/apps/hello-web/deployment.yaml
-            $(workspaces.shared-workspace.path)/apps/hello-web/service.yaml
-            $(workspaces.shared-workspace.path)/apps/hello-web/route.yaml
+            kubectl apply -f $(workspaces.shared-workspace.path)/apps/hello-web/deployment.yaml
+            kubectl apply -f $(workspaces.shared-workspace.path)/apps/hello-web/service.yaml
+            kubectl apply -f $(workspaces.shared-workspace.path)/apps/hello-web/route.yaml
       workspaces:
         - name: source
           workspace: shared-workspace
