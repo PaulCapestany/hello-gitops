@@ -1,0 +1,55 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: hello-web-pipeline
+  namespace: hello-web-namespace
+spec:
+  params:
+    - name: git-url
+      description: The git repository URL to build
+      type: string
+    - name: image-url
+      description: The image repository to push the built image to
+      type: string
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      params:
+        - name: url
+          value: "$(params.git-url)"
+        - name: revision
+          value: "main"
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+
+    - name: build-and-push
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      params:
+        - name: IMAGE
+          value: "$(params.image-url)"
+        - name: STORAGE_DRIVER
+          value: "vfs"
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+    - name: deploy
+      taskRef:
+        name: kubectl-apply
+        kind: ClusterTask
+      params:
+        - name: manifests
+          value: |
+            $(workspaces.shared-workspace.path)/apps/hello-web/deployment.yaml
+            $(workspaces.shared-workspace.path)/apps/hello-web/service.yaml
+            $(workspaces.shared-workspace.path)/apps/hello-web/route.yaml
+      workspaces:
+        - name: source
+          workspace: shared-workspace

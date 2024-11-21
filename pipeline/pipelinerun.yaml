@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: hello-web-pipelinerun
+  namespace: hello-web-namespace
+spec:
+  pipelineRef:
+    name: hello-web-pipeline
+  serviceAccountName: build-pipeline-sa
+  params:
+    - name: git-url
+      value: https://github.com/paulcapestany/hello-web.git
+    - name: image-url
+      value: quay.io/paulcapestany/hello-web:latest
+  workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: hello-web-pvc
