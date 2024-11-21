@@ -6,8 +6,12 @@ metadata:
 spec:
   params:
     - name: git-url
-      description: The git repository URL to build
+      description: The Git repository URL to build
       type: string
+    - name: revision
+      description: The Git revision (branch, tag, SHA) to clone
+      type: string
+      default: main
     - name: image-url
       description: The image repository to push the built image to
       type: string
@@ -22,7 +26,9 @@ spec:
         - name: url
           value: "$(params.git-url)"
         - name: revision
-          value: "main"
+          value: "$(params.revision)"
+        - name: deleteExisting
+          value: "true"   # Clean up the output directory before cloning.
       workspaces:
         - name: output
           workspace: shared-workspace

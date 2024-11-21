@@ -1,0 +1,9 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: hello-web-listener
+  namespace: hello-web-namespace
+spec:
+  to:
+    kind: Service
+    name: el-hello-web-listener

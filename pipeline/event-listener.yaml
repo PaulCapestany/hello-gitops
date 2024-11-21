@@ -1,0 +1,27 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: hello-web-listener
+  namespace: hello-web-namespace
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: hello-web-trigger
+      bindings:
+        - ref: hello-web-trigger-binding
+      template:
+        ref: hello-web-pipelinerun-template
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: el-hello-web-listener
+  namespace: hello-web-namespace
+spec:
+  type: ClusterIP
+  selector:
+    eventlistener: hello-web-listener
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

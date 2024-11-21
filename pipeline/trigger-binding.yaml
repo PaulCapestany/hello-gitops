@@ -1,0 +1,9 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: hello-web-trigger-binding
+  namespace: hello-web-namespace
+spec:
+  params:
+    - name: git-url
+      value: "$(body.repository.clone_url)"

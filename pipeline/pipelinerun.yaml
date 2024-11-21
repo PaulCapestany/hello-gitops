@@ -6,11 +6,12 @@ metadata:
 spec:
   pipelineRef:
     name: hello-web-pipeline
-  # Use the default pipeline ServiceAccount provided by OpenShift Pipelines
   serviceAccountName: pipeline
   params:
     - name: git-url
       value: https://github.com/paulcapestany/hello-web.git
+    - name: revision
+      value: main
     - name: image-url
       value: quay.io/paulcapestany/hello-web:latest
   workspaces:
