@@ -13,9 +13,9 @@ spec:
     - name: revision
       value: main
     - name: image-url
-      value: quay.io/paulcapestany/hello-web:$(params.commit-sha)
+      value: quay.io/paulcapestany/hello-web:cd82873
     - name: commit-sha
-      value: "$(params.commit-sha)"      
+      value: "cd82873"      
   workspaces:
     - name: shared-workspace
       persistentVolumeClaim:

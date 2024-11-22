@@ -9,7 +9,6 @@ spec:
       description: The Git repository URL to build
     - name: image-url
       description: The image repository to push the built image to
-      default: quay.io/paulcapestany/hello-web
     - name: commit-sha
       description: The commit SHA for tagging the image
       default: ""
@@ -24,12 +23,12 @@ spec:
           name: hello-web-pipeline
         serviceAccountName: pipeline
         params:
-          - name: url
-            value: "$(params.url)"
-          - name: image-url
-            value: "$(params.image-url)"
-          - name: commit-sha
-            value: "$(params.commit-sha)"
+        - name: url
+          value: "$(params.url)"
+        - name: image-url
+          value: "$(params.image-url)"
+        - name: commit-sha
+          value: "$(params.commit-sha)"
         workspaces:
           - name: shared-workspace
             persistentVolumeClaim:
