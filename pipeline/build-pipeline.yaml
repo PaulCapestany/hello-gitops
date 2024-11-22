@@ -34,6 +34,8 @@ spec:
             script: |
               #!/bin/sh
               set -e
+              echo "Cleaning output directory"
+              rm -rf $(workspaces.output.path)/*
               git clone --depth 1 --single-branch --branch $(params.revision) $(params.url) $(workspaces.output.path)
       params:
         - name: url
