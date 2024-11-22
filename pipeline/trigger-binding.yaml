@@ -8,4 +8,6 @@ spec:
     - name: url
       value: "$(body.repository.clone_url)"
     - name: image-url
-      value: "quay.io/paulcapestany/hello-web:$(body.head_commit.id[0:7])"
+      value: "quay.io/paulcapestany/hello-web:$(extensions.short_sha)"
+    - name: commit-sha
+      value: "$(extensions.short_sha)"

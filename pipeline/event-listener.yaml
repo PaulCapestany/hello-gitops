@@ -7,6 +7,11 @@ spec:
   serviceAccountName: pipeline
   triggers:
     - name: hello-web-trigger
+      interceptors:
+        - cel:
+            overlays:
+              - key: extensions.short_sha
+                expression: "body.head_commit.id.substring(0,7)"
       bindings:
         - ref: hello-web-trigger-binding
       template:

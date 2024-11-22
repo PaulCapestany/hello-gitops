@@ -13,7 +13,10 @@ spec:
       type: string
       default: main
     - name: image-url
-      description: The image repository to push the built image to
+      description: The full image URL (including tag) to push the built image to
+      type: string
+    - name: commit-sha
+      description: The shortened commit SHA for tagging the image
       type: string
   workspaces:
     - name: shared-workspace
