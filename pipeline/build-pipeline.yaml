@@ -19,16 +19,27 @@ spec:
     - name: shared-workspace
   tasks:
     - name: fetch-repository
-      taskRef:
-        name: git-clone
-        kind: ClusterTask
+      taskSpec:
+        params:
+          - name: url
+            type: string
+          - name: revision
+            type: string
+            default: main
+        workspaces:
+          - name: output
+        steps:
+          - name: clone
+            image: 'alpine/git'
+            script: |
+              #!/bin/sh
+              set -e
+              git clone --depth 1 --single-branch --branch $(params.revision) $(params.url) $(workspaces.output.path)
       params:
         - name: url
           value: "$(params.url)"
         - name: revision
           value: "$(params.revision)"
-        - name: deleteExisting
-          value: "true"
       workspaces:
         - name: output
           workspace: shared-workspace
@@ -45,8 +56,10 @@ spec:
           - name: extract-sha
             image: alpine
             script: |
-              SHORT_SHA=$(echo "$(params.commit-sha)" | cut -c1-7)
-              echo -n "$SHORT_SHA" > $(results.short-sha.path)
+              #!/bin/sh
+              set -e
+              SHORT_SHA=$(echo "$$(params.commit-sha)" | cut -c1-7)
+              echo -n "$$SHORT_SHA" > "$$(results.short-sha.path)"
       params:
         - name: commit-sha
           value: "$(params.commit-sha)"
