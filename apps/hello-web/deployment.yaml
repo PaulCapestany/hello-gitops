@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: hello-web
-        image: quay.io/paulcapestany/hello-web:latest
+        image: quay.io/paulcapestany/hello-web:PLACEHOLDER_TAG
         ports:
         - containerPort: 8080

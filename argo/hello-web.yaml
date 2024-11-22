@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-gitops
   annotations:
     argocd-image-updater.argoproj.io/image-list: hello-web=quay.io/paulcapestany/hello-web
-    argocd-image-updater.argoproj.io/hello-web.update-strategy: latest
+    argocd-image-updater.argoproj.io/hello-web.update-strategy: newest-build
     argocd-image-updater.argoproj.io/hello-web.tag-match: "^[a-f0-9]{7}$" # Match 7-character commit hashes
     argocd-image-updater.argoproj.io/write-back-method: git:secret
     argocd-image-updater.argoproj.io/git-user: "ci-bot"
