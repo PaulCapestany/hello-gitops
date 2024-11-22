@@ -8,7 +8,7 @@ spec:
     name: hello-web-pipeline
   serviceAccountName: pipeline
   params:
-    - name: git-url
+    - name: url
       value: https://github.com/paulcapestany/hello-web.git
     - name: revision
       value: main

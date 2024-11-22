@@ -5,7 +5,7 @@ metadata:
   namespace: hello-web-namespace
 spec:
   params:
-    - name: git-url
+    - name: url
       description: The Git repository URL to build
     - name: image-url
       description: The image repository to push the built image to
@@ -24,8 +24,8 @@ spec:
           name: hello-web-pipeline
         serviceAccountName: pipeline
         params:
-          - name: git-url
-            value: "$(params.git-url)"
+          - name: url
+            value: "$(params.url)"
           - name: image-url
             value: "$(params.image-url)"
           - name: commit-sha

@@ -5,7 +5,7 @@ metadata:
   namespace: hello-web-namespace
 spec:
   params:
-    - name: git-url
+    - name: url
       description: The Git repository URL to build
       type: string
     - name: revision
@@ -27,7 +27,7 @@ spec:
         kind: ClusterTask
       params:
         - name: url
-          value: "$(params.git-url)"
+          value: "$(params.url)"
         - name: revision
           value: "$(params.revision)"
         - name: deleteExisting
