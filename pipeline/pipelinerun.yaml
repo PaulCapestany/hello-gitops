@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: hello-web-pipelinerun-
+  name: hello-web-pipelinerun
   namespace: hello-web-namespace
 spec:
   pipelineRef:
