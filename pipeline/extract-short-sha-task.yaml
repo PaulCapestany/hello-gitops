@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: extract-short-sha
+  namespace: hello-web-namespace
+spec:
+  params:
+    - name: commit-sha
+      type: string
+  results:
+    - name: short-sha
+      description: The shortened commit SHA
+  steps:
+    - name: extract-sha
+      image: alpine
+      script: |
+        #!/bin/sh
+        set -e
+        SHORT_SHA=$(echo "$(params.commit-sha)" | cut -c1-7)
+        echo -n "$SHORT_SHA" > "$(results.short-sha.path)"

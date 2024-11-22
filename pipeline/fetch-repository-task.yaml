@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: fetch-repository
+  namespace: hello-web-namespace
+spec:
+  params:
+    - name: url
+      type: string
+    - name: revision
+      type: string
+      default: main
+  workspaces:
+    - name: output
+  steps:
+    - name: clone
+      image: 'alpine/git'
+      script: |
+        #!/bin/sh
+        set -e
+        echo "Cleaning output directory"
+        rm -rf $(workspaces.output.path)/*
+        git clone --depth 1 --single-branch --branch $(params.revision) $(params.url) $(workspaces.output.path)
