@@ -7,10 +7,8 @@ spec:
   params:
     - name: url
       description: The Git repository URL to build
-    - name: image-url
-      description: The full image URL (including tag) to push the built image to
     - name: commit-sha
-      description: The shortened commit SHA for tagging the image
+      description: The commit SHA for tagging the image
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -24,8 +22,6 @@ spec:
         params:
           - name: url
             value: "$(params.url)"
-          - name: image-url
-            value: "$(params.image-url)"
           - name: commit-sha
             value: "$(params.commit-sha)"
         workspaces:

@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: hello-web-pipelinerun
+  generateName: hello-web-pipelinerun-
   namespace: hello-web-namespace
 spec:
   pipelineRef:
@@ -12,10 +12,8 @@ spec:
       value: https://github.com/paulcapestany/hello-web.git
     - name: revision
       value: main
-    - name: image-url
-      value: quay.io/paulcapestany/hello-web:cd82873
     - name: commit-sha
-      value: "cd82873"      
+      value: "aa60068321248a07504ab5ba5b2e3b1a94ae5291"
   workspaces:
     - name: shared-workspace
       persistentVolumeClaim:

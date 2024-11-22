@@ -12,11 +12,8 @@ spec:
       description: The Git revision (branch, tag, SHA) to clone
       type: string
       default: main
-    - name: image-url
-      description: The full image URL (including tag) to push the built image to
-      type: string
     - name: commit-sha
-      description: The shortened commit SHA for tagging the image
+      description: The commit SHA for tagging the image
       type: string
   workspaces:
     - name: shared-workspace
@@ -36,15 +33,35 @@ spec:
         - name: output
           workspace: shared-workspace
 
+    - name: extract-short-sha
+      taskSpec:
+        params:
+          - name: commit-sha
+            type: string
+        results:
+          - name: short-sha
+            description: The shortened commit SHA
+        steps:
+          - name: extract-sha
+            image: alpine
+            script: |
+              SHORT_SHA=$(echo "$(params.commit-sha)" | cut -c1-7)
+              echo -n "$SHORT_SHA" > $(results.short-sha.path)
+      params:
+        - name: commit-sha
+          value: "$(params.commit-sha)"
+
     - name: build-and-push
       taskRef:
         name: buildah
         kind: ClusterTask
       params:
         - name: IMAGE
-          value: "$(params.image-url)"
+          value: "quay.io/paulcapestany/hello-web:$(tasks.extract-short-sha.results.short-sha)"
         - name: STORAGE_DRIVER
           value: "vfs"
       workspaces:
         - name: source
           workspace: shared-workspace
+      runAfter:
+        - extract-short-sha
