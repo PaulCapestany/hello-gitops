@@ -60,8 +60,8 @@ spec:
             script: |
               #!/bin/sh
               set -e
-              SHORT_SHA=$(echo "$$(params.commit-sha)" | cut -c1-7)
-              echo -n "$$SHORT_SHA" > "$$TEKTON_RESULTS_SHORT_SHA_PATH"
+              SHORT_SHA=$(echo "$(params.commit-sha)" | cut -c1-7)
+              echo -n "$SHORT_SHA" > "$(results.short-sha.path)"
       params:
         - name: commit-sha
           value: "$(params.commit-sha)"
